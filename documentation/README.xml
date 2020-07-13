@@ -4,7 +4,8 @@
 <article xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
     <info>
-        <title/>
+        <title>eXist-db React Frontend Application</title>
+        <subtitle>exist-app-archetype created application with React frontend</subtitle>
         <author>
             <orgname/>
             <address><city/>
@@ -14,8 +15,286 @@
             <email/>
         </author>
     </info>
-    <sect1>
-        <title/>
+    <section>
+        <title>Introduction</title>
+        <para>The following is instructions on creating an application for eXist-db with a react
+            front end with react-bootstrap components.</para>
+        <section>
+            <title>Requirements</title>
+            <orderedlist>
+                <listitem>
+                    <para>IntelliJ IDEA</para>
+                </listitem>
+            </orderedlist>
+        </section>
+    </section>
+    <section>
+        <title>Start maven project</title>
         <para/>
-    </sect1>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/select-maven-project.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para/>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project-identity.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para/>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project-identity-2.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+    </section>
+    <section>
+        <title>Creating react app</title>
+        <para>The next step is to create the react web application.  Follow the instructions for
+            setting up your system to be able to create the app.  The instructions are at: <link
+                xlink:href="https://reactjs.org/docs/create-a-new-react-app.html"/></para>
+        <procedure>
+            <step>
+                <para>cd src/main</para>
+            </step>
+            <step>
+                <para>mkdir js</para>
+            </step>
+            <step>
+                <para>cd js</para>
+            </step>
+            <step>
+                <para>npx create-react-app frontend</para>
+            </step>
+        </procedure>
+        <para/>
+    </section>
+    <section>
+        <title>Initial Modifications</title>
+        <para/>
+        <section>
+            <title>package.json</title>
+            <para>Add the following to <code>package.json</code> since the webapp is not in the root of the server.  
+                This makes the build being done relative.</para>
+            <programlisting language="javascript">  "homepage": ".",</programlisting>
+        </section>
+        <section>
+            <title>xar-resources</title>
+            <para>Remove <code>index.html</code> from <code>src/main/xar-resources</code>, because
+                that will be coming from <code>src/main/js/frontend</code></para>
+            <para>Edit <code>xar-assembly.xml</code> to add</para>
+            <programlisting language="xml">&lt;fileSet>
+    &lt;directory>${basedir}/src/main/js/frontend/build&lt;/directory>
+&lt;/fileSet></programlisting>
+            <para>below</para>
+            <programlisting language="xml">&lt;fileSet>
+    &lt;directory>${basedir}/src/main/xar-resources&lt;/directory>
+&lt;/fileSet></programlisting>
+        </section>
+    </section>
+    <section>
+        <title>React build plugin</title>
+        <para/>
+        <programlisting language="xml">&lt;!--
+   1. used for local installation of node and npm
+   2. to install dependencies with npm install
+   3. building the application
+ -->
+&lt;plugin>
+    &lt;groupId>com.github.eirslett&lt;/groupId>
+    &lt;artifactId>frontend-maven-plugin&lt;/artifactId>
+    &lt;version>1.10.0&lt;/version>
+    &lt;configuration>
+        &lt;nodeVersion>v14.5.0&lt;/nodeVersion>
+        &lt;npmVersion>6.14.6&lt;/npmVersion>
+        &lt;workingDirectory>src/main/js/frontend&lt;/workingDirectory>
+    &lt;/configuration>
+    &lt;executions>
+        &lt;execution>
+            &lt;id>Install node and npm locally to the project&lt;/id>
+            &lt;goals>
+                &lt;goal>install-node-and-npm&lt;/goal>
+            &lt;/goals>
+        &lt;/execution>
+        &lt;execution>
+            &lt;id>npm install&lt;/id>
+            &lt;goals>
+                &lt;goal>npm&lt;/goal>
+            &lt;/goals>
+        &lt;/execution>
+        &lt;execution>
+            &lt;id>Build frontend&lt;/id>
+            &lt;goals>
+                &lt;goal>npm&lt;/goal>
+            &lt;/goals>
+            &lt;configuration>
+                &lt;arguments>run build&lt;/arguments>
+            &lt;/configuration>
+        &lt;/execution>
+    &lt;/executions>
+&lt;/plugin></programlisting>
+    </section>
+    <section>
+        <title>Initializing git</title>
+        <para>run </para>
+        <procedure>
+            <step>
+                <programlisting language="bourne">git init</programlisting>
+            </step>
+            <step>
+                <programlisting language="bourne">git add LICENSE README.md documentation pom.xml src/ xar-assembly.xml
+                    xquery-license-style.xml</programlisting>
+            </step>
+            <step>
+                <programlisting language="bourne">git commit -m "Initial commit"</programlisting>
+            </step>
+        </procedure>
+    </section>
+    <section>
+        <title>Building</title>
+        <para>run </para>
+        <procedure>
+            <step>
+                <programlisting language="bourne">mvn clean package</programlisting>
+            </step>
+        </procedure>
+        <para>The XAR file is located in the <code>target</code> folder.  When it is installed, then
+            package manager entry is the following:</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/application-package-initial.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+        <para>When you launch the application, the following is the resulting webpage.</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/initial-result.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+    </section>
+    <section>
+        <title>Customization</title>
+        <para>The following are the steps to change the entries so that this generates your
+            application with the proper entries.</para>
+        <section>
+            <title>Change the name of the application</title>
+            <para>The highlighted part of the package manger entry is the name of the
+                application.</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/application-package-pre-name-change.png"
+                            width="90%"/>
+                    </imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>To change the name of the application, change the entry in the
+                    <code>pom.xml</code> file</para>
+            <programlisting language="xml">    &lt;name>Example App&lt;/name>
+    &lt;description>Example App for eXist-db&lt;/description>
+    &lt;url>https://my-organisation.com/exist-db/app&lt;/url>
+
+    &lt;organization>
+        &lt;name>My Organisation&lt;/name>
+        &lt;url>http://my-organisation.com&lt;/url>
+    &lt;/organization></programlisting>
+            <para>Change <code>Example App</code> to <code>My React Application</code></para>
+            <programlisting language="xml">    &lt;name>My React Application&lt;/name>
+    &lt;description>Example App for eXist-db&lt;/description>
+    &lt;url>https://my-organisation.com/exist-db/app&lt;/url>
+
+    &lt;organization>
+        &lt;name>My Organisation&lt;/name>
+        &lt;url>http://my-organisation.com&lt;/url>
+    &lt;/organization></programlisting>
+            <para>Run <code>mvn clean package</code> again and reinstall the application.</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/application-package-post-name-change.png"
+                            width="90%"/>
+                    </imageobject>
+                </mediaobject>
+            </informalfigure>
+        </section>
+        <section>
+            <title>Change the icon</title>
+            <para>Each eXist-db application has an icon.</para>
+            <informalfigure>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/application-package-pre-icon-change.png"
+                            width="90%"/>
+                    </imageobject>
+                </mediaobject>
+            </informalfigure>
+            <para>The icon is in <code>src/main/xar-resource</code> and is <code>icon.png</code>.
+                You can replace the png file with your own file of remove that file and store
+                    <code>icon.svg</code> in the directory.  After the change, rerun <code>mvn clean
+                    package</code> and reinstall.</para>
+        </section>
+    </section>
+    <section>
+        <title>react-bootstrap</title>
+        <para/>
+        <procedure>
+            <step>
+                <programlisting language="bourne">cd src/main/js/frontend</programlisting>
+            </step>
+            <step>
+                <programlisting language="bourne">npm install react-bootstrap bootstrap</programlisting>
+            </step>
+            <step>
+                <para>Change <code>src/main/js/frontent/src/App.js</code> to the following:</para>
+                <programlisting language="javascript">import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+
+function App() {
+  return (
+      &lt;Navbar bg="dark" variant="dark">
+          &lt;Navbar.Brand href="#home">My React Application&lt;/Navbar.Brand>
+          &lt;Nav className="mr-auto">
+              &lt;Nav.Link href="#home">Home&lt;/Nav.Link>
+              &lt;Nav.Link href="#features">Features&lt;/Nav.Link>
+              &lt;Nav.Link href="#pricing">Pricing&lt;/Nav.Link>
+          &lt;/Nav>
+          &lt;Form inline>
+              &lt;Form.Control type="text" placeholder="Search" className="mr-sm-2" />
+              &lt;Button variant="outline-info">Search&lt;/Button>
+          &lt;/Form>
+      &lt;/Navbar>
+  );
+}
+
+export default App;</programlisting>
+            </step>
+            <step>
+                <para>Run <code>mvn clean package</code></para>
+            </step>
+        </procedure>
+        <para>The result is:</para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/react-bootstrap-navbar.png" width="90%"/>
+                </imageobject>
+            </mediaobject>
+        </informalfigure>
+    </section>
 </article>

@@ -1,0 +1,8 @@
+target/
+
+*.iml
+.idea/
+.DS_Store
+/documentation.zip
+/documentation/README.pdf
+/src/main/js/frontend/node

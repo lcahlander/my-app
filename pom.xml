@@ -15,7 +15,7 @@
     <artifactId>my-app</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Example App</name>
+    <name>My React Application</name>
     <description>Example App for eXist-db</description>
     <url>https://my-organisation.com/exist-db/app</url>
 
@@ -132,7 +132,7 @@
                 <configuration>
                     <nodeVersion>v14.5.0</nodeVersion>
                     <npmVersion>6.14.6</npmVersion>
-                    <workingDirectory>src/main/webapp</workingDirectory>
+                    <workingDirectory>src/main/js/frontend</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
