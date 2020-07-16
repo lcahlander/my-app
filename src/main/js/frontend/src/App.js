@@ -13,7 +13,7 @@ function App() {
   return (
         <Router>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="/">My React Application</Navbar.Brand>
+                <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" weign="40" height="40"/> My React Application</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/features">Features</Nav.Link>
@@ -22,17 +22,17 @@ function App() {
             </Navbar>
             <Switch>
                 <Route path="/features">
-                    <div>
+                    <div className="full">
                         <h1>Features</h1>
                     </div>
                 </Route>
                 <Route path="/pricing">
-                    <div>
+                    <div className="full">
                         <h1>Pricing</h1>
                     </div>
                 </Route>
                 <Route path="/">
-                    <div>
+                    <div className="full">
                         <h1>Home</h1>
                     </div>
                 </Route>
