@@ -20,16 +20,16 @@ function App() {
                 <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" width="40" height="40"/> My React Application</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Link to="/" className="nav-link">Home</Link>
-                    <Link to="/features/" className="nav-link">Features</Link>
-                    <Link to="/pricing/" className="nav-link">Pricing</Link>
+                    <Link to="/features" className="nav-link">Features</Link>
+                    <Link to="/pricing" className="nav-link">Pricing</Link>
                 </Nav>
             </Navbar>
             <div className="full">
                 <Switch>
-                    <Route path="/features/">
+                    <Route path="/features">
                         <h1>Features</h1>
                     </Route>
-                    <Route path="/pricing/">
+                    <Route path="/pricing">
                         <h1>Pricing</h1>
                     </Route>
                     <Route path="/">
