@@ -1,42 +1,42 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import qs from 'qs';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
-    Route
+    Route,
+    Link
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
 function App() {
+    const paramObj = qs.parse(window.location.search.substring(1), {});
   return (
         <Router>
-            <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" weign="40" height="40"/> My React Application</Navbar.Brand>
+            <Navbar bg="dark" variant="dark" fixed="top">
+                <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" width="40" height="40"/> My React Application</Navbar.Brand>
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/features">Features</Nav.Link>
-                    <Nav.Link href="/pricing">Pricing</Nav.Link>
+                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/features/" className="nav-link">Features</Link>
+                    <Link to="/pricing/" className="nav-link">Pricing</Link>
                 </Nav>
             </Navbar>
-            <Switch>
-                <Route path="/features">
-                    <div className="full">
+            <div className="full">
+                <Switch>
+                    <Route path="/features/">
                         <h1>Features</h1>
-                    </div>
-                </Route>
-                <Route path="/pricing">
-                    <div className="full">
+                    </Route>
+                    <Route path="/pricing/">
                         <h1>Pricing</h1>
-                    </div>
-                </Route>
-                <Route path="/">
-                    <div className="full">
+                    </Route>
+                    <Route path="/">
                         <h1>Home</h1>
-                    </div>
-                </Route>
-            </Switch>
+                    </Route>
+                </Switch>
+            </div>
         </Router>
   );
 }
