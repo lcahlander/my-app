@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavItem from 'react-bootstrap/NavItem';
 import qs from 'qs';
 import {
     HashRouter as Router,
@@ -11,34 +12,45 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+export default class App extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            showModal: false
+        };
+    }
 
-function App() {
-    const paramObj = qs.parse(window.location.search.substring(1), {});
-  return (
-        <Router>
-            <Navbar bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" width="40" height="40"/> My React Application</Navbar.Brand>
-                <Nav className="mr-auto">
-                    <Link to="/" className="nav-link">Home</Link>
-                    <Link to="/features" className="nav-link">Features</Link>
-                    <Link to="/pricing" className="nav-link">Pricing</Link>
-                </Nav>
-            </Navbar>
-            <div className="full">
-                <Switch>
-                    <Route path="/features">
-                        <h1>Features</h1>
-                    </Route>
-                    <Route path="/pricing">
-                        <h1>Pricing</h1>
-                    </Route>
-                    <Route path="/">
-                        <h1>Home</h1>
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
-  );
+    handleToggleModal() {
+    }
+
+
+    render() {
+        const paramObj = qs.parse(window.location.search.substring(1), {});
+        return (
+            <Router>
+                <Navbar bg="dark" variant="dark" fixed="top">
+                    <Navbar.Brand href="/"><img alt="" src="https://avatars3.githubusercontent.com/u/2393489?s=200&v=4" width="40" height="40"/> My React Application</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Link to="/" className="nav-link">Home</Link>
+                        <Link to="/features" className="nav-link">Features</Link>
+                        <Link to="/pricing" className="nav-link">Pricing</Link>
+                        <NavItem onClick={() => this.handleToggleModal()}>Show Modal</NavItem>
+                    </Nav>
+                </Navbar>
+                <div className="full">
+                    <Switch>
+                        <Route path="/features">
+                            <h1>Features</h1>
+                        </Route>
+                        <Route path="/pricing">
+                            <h1>Pricing</h1>
+                        </Route>
+                        <Route path="/">
+                            <h1>Home</h1>
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+        );
+    }
 }
-
-export default App;
