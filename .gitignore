@@ -6,3 +6,4 @@ target/
 /documentation.zip
 /documentation/README.pdf
 /src/main/js/frontend/node
+/src/main/js/frontend/package-lock.json
